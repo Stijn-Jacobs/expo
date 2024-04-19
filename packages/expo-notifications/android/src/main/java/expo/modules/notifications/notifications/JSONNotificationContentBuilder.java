@@ -26,6 +26,7 @@ public class JSONNotificationContentBuilder extends NotificationContent.Builder 
   private static final String AUTO_DISMISS_KEY = "autoDismiss";
   private static final String CATEGORY_IDENTIFIER_KEY = "categoryId";
   private static final String STICKY_KEY = "sticky";
+  private static final String CAR_NOTIFICATION_KEY = "showOnCar";
 
 
   private SoundResolver mSoundResolver;
@@ -44,7 +45,8 @@ public class JSONNotificationContentBuilder extends NotificationContent.Builder 
       .setColor(getColor(payload))
       .setAutoDismiss(getAutoDismiss(payload))
       .setCategoryId(getCategoryId(payload))
-      .setSticky(getSticky(payload));
+      .setSticky(getSticky(payload))
+      .setCarNotification(getCarNotification(payload));
 
     if (shouldPlayDefaultSound(payload)) {
       useDefaultSound();
@@ -198,6 +200,17 @@ public class JSONNotificationContentBuilder extends NotificationContent.Builder 
       }
     }
     // TODO: the default value should be determined by NotificationContent.Builder
+    return false;
+  }
+
+  protected boolean getCarNotification(JSONObject payload) {
+    if (payload.has(CAR_NOTIFICATION_KEY)) {
+      try {
+        return payload.getBoolean(CAR_NOTIFICATION_KEY);
+      } catch (JSONException e) {
+        Log.e("expo-notifications", "Could not have parsed a boolean carNotification value passed in notification, falling back to a default value.");
+      }
+    }
     return false;
   }
 }

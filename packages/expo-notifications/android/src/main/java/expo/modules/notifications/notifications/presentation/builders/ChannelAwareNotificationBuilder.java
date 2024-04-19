@@ -34,7 +34,7 @@ public abstract class ChannelAwareNotificationBuilder extends BaseNotificationBu
     super(context);
   }
 
-  protected NotificationCompat.Builder createBuilder() {
+  public NotificationCompat.Builder createBuilder() {
     return new NotificationCompat.Builder(getContext(), getChannelId());
   }
 
