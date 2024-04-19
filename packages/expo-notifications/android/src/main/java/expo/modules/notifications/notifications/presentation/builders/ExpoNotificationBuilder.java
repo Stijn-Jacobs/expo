@@ -14,7 +14,10 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.car.app.CarToast;
+import androidx.car.app.notification.CarAppExtender;
 import androidx.core.app.NotificationCompat;
+import expo.modules.notifications.R;
 import expo.modules.notifications.notifications.enums.NotificationPriority;
 import expo.modules.notifications.notifications.interfaces.NotificationBuilder;
 import expo.modules.notifications.notifications.model.NotificationAction;
@@ -40,7 +43,7 @@ public class ExpoNotificationBuilder extends ChannelAwareNotificationBuilder {
     super(context);
   }
 
-  protected NotificationCompat.Builder createBuilder() {
+  public NotificationCompat.Builder createBuilder() {
     NotificationCompat.Builder builder = super.createBuilder();
     builder.setSmallIcon(getIcon());
     builder.setLargeIcon(getLargeIcon());
@@ -91,6 +94,10 @@ public class ExpoNotificationBuilder extends ChannelAwareNotificationBuilder {
       Bundle extras = builder.getExtras();
       extras.putString(EXTRAS_BODY_KEY, content.getBody().toString());
       builder.setExtras(extras);
+    }
+
+    if (content.isCarNotification()) {
+      builder.extend(new CarAppExtender.Builder().build());
     }
 
     // Save the notification request in extras for later usage

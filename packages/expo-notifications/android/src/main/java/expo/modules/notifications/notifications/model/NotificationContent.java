@@ -34,6 +34,7 @@ public class NotificationContent implements Parcelable, Serializable {
   private boolean mAutoDismiss;
   private String mCategoryId;
   private boolean mSticky;
+  private boolean mCarNotification;
 
   protected NotificationContent() {
   }
@@ -115,6 +116,10 @@ public class NotificationContent implements Parcelable, Serializable {
     return mSticky;
   }
 
+  public boolean isCarNotification() {
+    return mCarNotification;
+  }
+
   @Override
   public int describeContents() {
     return 0;
@@ -142,6 +147,7 @@ public class NotificationContent implements Parcelable, Serializable {
     mAutoDismiss = in.readByte() == 1;
     mCategoryId = in.readString();
     mSticky = in.readByte() == 1;
+    mCarNotification = in.readByte() == 1;
   }
 
   @Override
@@ -160,6 +166,7 @@ public class NotificationContent implements Parcelable, Serializable {
     dest.writeByte((byte) (mAutoDismiss ? 1 : 0));
     dest.writeString(mCategoryId);
     dest.writeByte((byte) (mSticky ? 1 : 0));
+    dest.writeByte((byte) (mCarNotification ? 1 : 0));
   }
 
   //                                           EXPONOTIFCONTENT02
@@ -187,6 +194,7 @@ public class NotificationContent implements Parcelable, Serializable {
     out.writeByte(mAutoDismiss ? 1 : 0);
     out.writeObject(mCategoryId != null ? mCategoryId.toString() : null);
     out.writeByte(mSticky ? 1 : 0);
+    out.writeByte(mCarNotification ? 1 : 0);
   }
 
   private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -234,6 +242,7 @@ public class NotificationContent implements Parcelable, Serializable {
       mCategoryId = new String(categoryIdString);
     }
     mSticky = in.readByte() == 1;
+    mCarNotification = in.readByte() == 1;
   }
 
   private void readObjectNoData() throws ObjectStreamException {
@@ -254,6 +263,7 @@ public class NotificationContent implements Parcelable, Serializable {
     private boolean mAutoDismiss;
     private String mCategoryId;
     private boolean mSticky;
+    private boolean mCarNotification;
 
     public Builder() {
       useDefaultSound();
@@ -334,6 +344,11 @@ public class NotificationContent implements Parcelable, Serializable {
       return this;
     }
 
+    public Builder setCarNotification(boolean carNotification) {
+      mCarNotification = carNotification;
+      return this;
+    }
+
     public NotificationContent build() {
       NotificationContent content = new NotificationContent();
       content.mTitle = mTitle;
@@ -350,6 +365,7 @@ public class NotificationContent implements Parcelable, Serializable {
       content.mAutoDismiss = mAutoDismiss;
       content.mCategoryId = mCategoryId;
       content.mSticky = mSticky;
+      content.mCarNotification = mCarNotification;
       return content;
     }
   }

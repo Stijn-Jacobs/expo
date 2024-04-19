@@ -29,6 +29,7 @@ public class ArgumentsNotificationContentBuilder extends NotificationContent.Bui
   private static final String AUTO_DISMISS_KEY = "autoDismiss";
   private static final String CATEGORY_IDENTIFIER_KEY = "categoryIdentifier";
   private static final String STICKY_KEY = "sticky";
+  private static final String CAR_NOTIFICATION_KEY = "showOnCar";
 
   private SoundResolver mSoundResolver;
 
@@ -46,7 +47,8 @@ public class ArgumentsNotificationContentBuilder extends NotificationContent.Bui
       .setColor(getColor(payload))
       .setAutoDismiss(getAutoDismiss(payload))
       .setCategoryId(getCategoryId(payload))
-      .setSticky(getSticky(payload));
+      .setSticky(getSticky(payload))
+      .setCarNotification(getShowOnCar(payload));
 
     if (shouldPlayDefaultSound(payload)) {
       useDefaultSound();
@@ -60,6 +62,10 @@ public class ArgumentsNotificationContentBuilder extends NotificationContent.Bui
       setVibrationPattern(getVibrationPattern(payload));
     }
     return this;
+  }
+
+  protected boolean getShowOnCar(ReadableArguments payload) {
+    return payload.getBoolean(CAR_NOTIFICATION_KEY, false);
   }
 
   protected Number getBadgeCount(ReadableArguments payload) {

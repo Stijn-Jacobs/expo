@@ -27,7 +27,7 @@ public class CategoryAwareNotificationBuilder extends ExpoNotificationBuilder {
   }
 
   @Override
-  protected NotificationCompat.Builder createBuilder() {
+  public NotificationCompat.Builder createBuilder() {
     NotificationCompat.Builder builder = super.createBuilder();
 
     NotificationContent content = getNotificationContent();

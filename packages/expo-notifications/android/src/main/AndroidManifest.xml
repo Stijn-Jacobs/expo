@@ -5,6 +5,9 @@
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
   <application>
+    <meta-data
+      android:name="com.google.android.gms.car.application"
+      android:resource="@xml/automotive_app_desc" />
     <service
       android:name=".service.ExpoFirebaseMessagingService"
       android:exported="false">

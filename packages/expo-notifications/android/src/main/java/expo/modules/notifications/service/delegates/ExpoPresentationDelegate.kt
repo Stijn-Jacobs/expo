@@ -11,6 +11,8 @@ import android.provider.Settings
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import android.util.Pair
+import androidx.car.app.notification.CarNotificationManager
+import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import expo.modules.notifications.notifications.enums.NotificationPriority
 import expo.modules.notifications.notifications.model.Notification
@@ -95,10 +97,10 @@ open class ExpoPresentationDelegate(
       }
       return
     }
-    NotificationManagerCompat.from(context).notify(
+    CarNotificationManager.from(context).notify(
       notification.notificationRequest.identifier,
       getNotifyId(notification.notificationRequest),
-      createNotification(notification, behavior)
+      createBuilder(notification, behavior)
     )
   }
 
@@ -139,11 +141,11 @@ open class ExpoPresentationDelegate(
 
   override fun dismissAllNotifications() = NotificationManagerCompat.from(context).cancelAll()
 
-  protected open fun createNotification(notification: Notification, notificationBehavior: NotificationBehavior?): android.app.Notification =
+  protected open fun createBuilder(notification: Notification, notificationBehavior: NotificationBehavior?): NotificationCompat.Builder =
     CategoryAwareNotificationBuilder(context, SharedPreferencesNotificationCategoriesStore(context)).also {
       it.setNotification(notification)
       it.setAllowedBehavior(notificationBehavior)
-    }.build()
+    }.createBuilder()
 
   protected open fun getNotification(statusBarNotification: StatusBarNotification): Notification? {
     val notification = statusBarNotification.notification

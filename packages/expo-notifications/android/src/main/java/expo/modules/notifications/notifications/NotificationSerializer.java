@@ -97,6 +97,7 @@ public class NotificationSerializer {
       serializedContent.putString("categoryIdentifier", content.getCategoryId());
     }
     serializedContent.putBoolean("sticky", content.isSticky());
+    serializedContent.putBoolean("showOnCar", content.isCarNotification());
     return serializedContent;
   }
 
