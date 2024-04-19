@@ -534,6 +534,11 @@ export type NotificationContentInput = {
    */
   sticky?: boolean;
   /**
+   * A boolean indicating whether to allow Android auto to display notifications of this type.
+   * @platform android
+   */
+  showOnCar?: boolean;
+  /**
    * The visual and audio attachments to display alongside the notification’s main content.
    * @platform ios
    */
